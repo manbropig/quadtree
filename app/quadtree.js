@@ -8,7 +8,7 @@ function QTNode(bounds) {
 }
 
 QTNode.prototype.getBoundsFor = function(bounds, quadrant) {
-  var halfLength = bounds.half / 2;
+  var halfLength = bounds.halfx / 2;
   var center = bounds.center;
   var point = {
     nw: (function() {
@@ -94,15 +94,25 @@ QTNode.prototype.insert = function(point) {
   return false;
 };
 
-QTNode.prototype.queryRange = function() {
+QTNode.prototype.queryRange = function(range) {
+  var results = [];
 
+  if (!this.bounds.intersects(range)) {
+    return results;
+  }
+
+  this.points.forEach(function(point) {
+    if (range.contains(point)) {
+      results.push(point);
+    }
+  });
+
+  if (this.nw) {
+    var _this = this;
+    quadrants.forEach(function(quad) {
+      results.concat(_this[quad].queryRange(range));
+    });
+  }
+
+  return results;
 };
-
-
-// function remove(points, point) {
-//   var idx = points.indexOf(point);
-//   if (idx !== -1) {
-//     points.splice(idx, 1);
-//   }
-//   return points;
-// }
