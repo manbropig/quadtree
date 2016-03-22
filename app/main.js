@@ -1,4 +1,5 @@
 var element    = $('#main-view');
+var cover      = $('#cover');
 var WIDTH      = element.width();
 var HEIGHT     = element.height();
 var plotCount  = 500;
@@ -10,12 +11,17 @@ var center     = new Point(halfWidth, halfHeight);
 var bounds     = new Boundary(center, halfWidth);
 var root       = new QTNode(bounds);
 
-root.insert(new Point(10, 10));
+insert(10, 10);
+
+function insert(x, y) {
+  var point = arguments.length === 0 ? generatePoint() : new Point(x, y);
+  root.insert(point);
+}
 
 function plot(count) {
   var total = 0;
   var interval = setInterval(function() {
-    root.insert(generatePoint());
+    insert();
     total++;
     if(total >= count) {
       clearInterval(interval);
@@ -28,3 +34,8 @@ function generatePoint() {
 }
 
 plot(plotCount);
+
+cover.click(function($event) {
+  console.log($event.offsetX, $event.offsetY);
+  insert($event.offsetX, $event.offsetY);
+});

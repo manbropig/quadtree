@@ -4,10 +4,12 @@ function Point(x, y) {
 }
 
 Point.prototype.render = function() {
+  var xVal = this.x - 1;
+  var yVal = this.y - 1;
   var $div = $("<div>", {
     id: 'x' + this.x + 'y' + this.y,
     class: 'point',
-    style: 'top: ' + this.y + '; left: ' + this.x
+    style: 'top: ' + yVal + '; left: ' + xVal
   });
 
   $('#main-view').append($div);

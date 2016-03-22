@@ -94,6 +94,10 @@ QTNode.prototype.insert = function(point) {
   return false;
 };
 
+QTNode.prototype.queryRange = function() {
+
+};
+
 
 // function remove(points, point) {
 //   var idx = points.indexOf(point);
