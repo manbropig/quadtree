@@ -4,8 +4,8 @@ function Point(x, y) {
 }
 
 Point.prototype.render = function() {
-  var xVal = this.x - 1;
-  var yVal = this.y - 1;
+  var xVal = this.x - 2;
+  var yVal = this.y - 2;
   var $div = $("<div>", {
     id: 'x' + this.x + 'y' + this.y,
     class: 'point',
