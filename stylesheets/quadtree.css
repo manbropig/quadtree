@@ -1,0 +1,18 @@
+#main-view {
+  position: absolute;
+  width: 800px;
+  height: 800px;
+  background: #FFF; }
+
+.point {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background-color: black;
+  border-radius: 50%; }
+
+.boundary {
+  position: absolute;
+  border: 1px solid #6DF9FC; }
+
+/*# sourceMappingURL=quadtree.css.map */
