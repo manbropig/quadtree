@@ -39,7 +39,7 @@ module.exports = function(grunt) {
       //   files: { "assets/vendor.css": "vendor/stylesheets/vendor.css.scss" }
       // },
       application_css: {
-        files: { "stylesheets/application.css": "stylesheets/application.css.scss" }
+        files: { "app/stylesheets/application.css": "app/stylesheets/application.css.scss" }
       }
     },
     watch: {
@@ -83,7 +83,7 @@ module.exports = function(grunt) {
   grunt.registerTask('process_application_scss', [], function () {
     require('time-grunt')(grunt);
     grunt.loadNpmTasks('grunt-sass');
-    fsExtra.ensureFileSync('stylesheets/application.css.scss'); // Ensure necessary file exist
+    fsExtra.ensureFileSync('app/stylesheets/application.css.scss'); // Ensure necessary file exist
 
     grunt.task.run('sass:application_css');
   });
