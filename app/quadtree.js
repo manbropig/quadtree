@@ -110,7 +110,7 @@ QTNode.prototype.queryRange = function(range) {
   if (this.nw) {
     var _this = this;
     quadrants.forEach(function(quad) {
-      results.concat(_this[quad].queryRange(range));
+      results = results.concat(_this[quad].queryRange(range));
     });
   }
 

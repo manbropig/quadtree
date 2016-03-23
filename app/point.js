@@ -14,3 +14,7 @@ Point.prototype.render = function() {
 
   $('#main-view').append($div);
 };
+
+Point.prototype.toString = function() {
+  return this.x + ', ' + this.y;
+}

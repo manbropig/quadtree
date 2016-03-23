@@ -11,11 +11,9 @@ var center     = new Point(halfWidth, halfHeight);
 var bounds     = new Boundary(center, halfWidth);
 var root       = new QTNode(bounds);
 
-var dragStart  = null;
-var dragEnd    = null;
+var start      = null;
+var end        = null;
 var dragRange  = null;
-
-insert(10, 10);
 
 function insert(x, y) {
   var point = arguments.length === 0 ? generatePoint() : new Point(x, y);
@@ -37,26 +35,24 @@ function generatePoint() {
   return new Point(_.random(0, WIDTH), _.random(0, HEIGHT));
 }
 
-function setDragBounds(start, end) {
-  var xmid  = (end.x + start.x) / 2;
-  var ymid  = (end.y + start.y) / 2;
-  var halfx = (end.x - start.x) / 2;
-  var halfy = (end.y - start.y) / 2;
-  var dragBounds = new Boundary(new Point(xmid, ymid), halfx, halfy);
-  console.log(root.queryRange(dragBounds));
-}
-
-plot(plotCount);
-
-cover.click(function($event) {
-  insert($event.offsetX, $event.offsetY);
-});
+// plot(plotCount);
 
 cover.mousedown(function($event) {
-  dragStart = new Point($event.offsetX, $event.offsetY);
+  start = new Point($event.offsetX, $event.offsetY);
 });
 
 cover.mouseup(function($event) {
-  dragEnd = new Point($event.offsetX, $event.offsetY);
-  setDragBounds(dragStart, dragEnd);
+  end = new Point($event.offsetX, $event.offsetY);
+  var xLength = end.x - start.x;
+  if (xLength > 1) {
+    var xmid  = (end.x + start.x) / 2;
+    var ymid  = (end.y + start.y) / 2;
+    var halfx = xLength / 2;
+    var halfy = (end.y - start.y) / 2;
+    var dragBounds = new Boundary(new Point(xmid, ymid), halfx, halfy);
+    dragBounds.render({dragged: true});
+    console.log(root.queryRange(dragBounds));
+  } else {
+    insert($event.offsetX, $event.offsetY);
+  }
 });

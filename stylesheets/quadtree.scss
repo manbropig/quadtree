@@ -2,6 +2,7 @@
   position: absolute;
   width: 800px;
   height: 800px;
+  cursor: pointer;
   .point {
     position: absolute;
     width: 4px;
@@ -14,5 +15,9 @@
     border: 1px solid #448cea;
     z-index: -1;
     opacity: 0.3;
+
+    &.drawn {
+      border: 2px dotted #00ff1d;
+    }
   }
 }

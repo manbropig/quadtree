@@ -1,7 +1,11 @@
 function Boundary(centerPoint, halfx, halfy) {
   this.center = centerPoint;
-  this.halfx   = halfx;
+  this.halfx  = halfx;
   this.halfy  = !_.isUndefined(halfy) ? halfy : halfx;
+  this.left   = this.center.x - this.halfx;
+  this.right  = this.center.x + this.halfx;
+  this.top    = this.center.y - this.halfy;
+  this.bottom = this.center.y + this.halfy;
 }
 
 Boundary.prototype.contains = function(point) {
@@ -14,47 +18,26 @@ Boundary.prototype.contains = function(point) {
 };
 
 Boundary.prototype.intersects = function(other) {
-  var _this = this;
-  var boundsArray = [_this, other].sort(function(a, b) {
-    return getArea(a) >= getArea(b) ? 1 : -1;
-  });
-
-  var larger  = _.first(boundsArray);
-  var smaller = _.last(boundsArray);
-  var smallCorners = getCorners(smaller);
-  var contained = _.filter(smallCorners, function(corner) {
-    return larger.contains(corner);
-  });
-  return !!contained.length;
+  return !(other.left > this.right || other.right < this.left ||
+           other.top > this.bottom ||other.bottom < this.top);
 };
 
-Boundary.prototype.render = function() {
+Boundary.prototype.render = function(options) {
+  $('.drawn').remove();
+  var boundsClass = (options && options.dragged) ? 'boundary drawn' : 'boundary';
   var $div = $("<div>", {
     id: 'center' + this.center.x,
-    class: 'boundary',
+    class: boundsClass,
     style: getStyle(this)
   });
 
   $('#main-view').append($div);
 };
 
-function getArea(bounds) {
-  var corners = getCorners(bounds);
-  return (corners.ne - corners.nw) * (corners.sw - corners.nw);
-}
-
-function getCorners(bounds) {
-  return {
-    nw: new Point(bounds.center.x - bounds.halfx, bounds.center.y - bounds.halfy),
-    ne: new Point(bounds.center.x + bounds.halfx, bounds.center.y - bounds.halfy),
-    sw: new Point(bounds.center.x - bounds.halfx, bounds.center.y + bounds.halfy),
-    se: new Point(bounds.center.x + bounds.halfx, bounds.center.y + bounds.halfy)
-  };
-}
-
 function getStyle(bounds) {
   var top   = bounds.center.y  - bounds.halfy;
   var left  = bounds.center.x - bounds.halfx;
   var width = bounds.halfx * 2;
-  return 'top: ' + top + 'px' + '; left: ' + left + 'px' + '; width: ' + width + 'px' + '; height: '+ width + 'px';
+  var height = bounds.halfy * 2;
+  return 'top: ' + top + 'px' + '; left: ' + left + 'px' + '; width: ' + width + 'px' + '; height: '+ height + 'px';
 }

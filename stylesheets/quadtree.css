@@ -1,7 +1,8 @@
 .view {
   position: absolute;
   width: 800px;
-  height: 800px; }
+  height: 800px;
+  cursor: pointer; }
   .view .point {
     position: absolute;
     width: 4px;
@@ -13,5 +14,7 @@
     border: 1px solid #448cea;
     z-index: -1;
     opacity: 0.3; }
+    .view .boundary.drawn {
+      border: 2px dotted #00ff1d; }
 
 /*# sourceMappingURL=quadtree.css.map */
