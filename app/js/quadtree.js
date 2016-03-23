@@ -1,3 +1,8 @@
+module.exports = (function() {
+
+  var Point     = require('./point.js');
+  var Boundary  = require('./boundary.js');
+
   var quadrants = 'nw,ne,sw,se'.split(',');
 
   function QTNode(bounds) {
@@ -116,3 +121,6 @@
 
     return results;
   };
+
+  return QTNode;
+})();

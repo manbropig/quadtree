@@ -48,7 +48,7 @@ module.exports = function(grunt) {
       },
       application_js: {
         files: ['app/js/*.js'],
-        tasks: ['process_application_js:dev'],
+        tasks: ['browserify'],
         options: {
           livereload: true,
         }
@@ -61,6 +61,12 @@ module.exports = function(grunt) {
         }
       }
     },
+    browserify: {
+      main: {
+        src: 'app/js/main.js',
+        dest: 'app/js/application.js'
+      }
+    },
     concurrent: {
       options: {
         logConcurrentOutput: true
@@ -68,6 +74,7 @@ module.exports = function(grunt) {
       dev: [
         'watch',
         'connect',
+        'browserify'
       ]
     }
   });
@@ -88,22 +95,23 @@ module.exports = function(grunt) {
     grunt.task.run('sass:application_css');
   });
 
-  grunt.registerTask('process_application_js:dev', [], function () {
-    require('time-grunt')(grunt);
-    grunt.loadNpmTasks('grunt-contrib-uglify');
-
-    fsExtra.ensureFileSync('app/application.js'); // Ensure necessary file exist
-
-    grunt.task.run(
-      'uglify:dev_application_js'
-    );
-  });
+  // grunt.registerTask('process_application_js:dev', [], function () {
+  //   require('time-grunt')(grunt);
+  //   grunt.loadNpmTasks('grunt-contrib-uglify');
+  //
+  //   fsExtra.ensureFileSync('app/application.js'); // Ensure necessary file exist
+  //
+  //   grunt.task.run(
+  //     'uglify:dev_application_js'
+  //   );
+  // });
 
   grunt.registerTask('compile_dev', [], function(mode) {
     var fullTaskList = [
       // 'process_vendor_scss',
       'process_application_scss',
-      'process_application_js:dev'
+      // 'process_application_js:dev'
+      'browserify'
     ];
 
     grunt.task.run(fullTaskList);
@@ -111,6 +119,7 @@ module.exports = function(grunt) {
   });
 
   // ** default grunt behaviour **
+  grunt.loadNpmTasks('grunt-browserify');
   grunt.loadNpmTasks('grunt-contrib-watch');
   grunt.registerTask('default', [
     'compile_dev',

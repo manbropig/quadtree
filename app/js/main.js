@@ -1,10 +1,14 @@
+var Point      = require('./point.js');
+var Boundary   = require('./boundary.js');
+var QTNode     = require('./quadtree.js');
+
 var element    = $('#main-view');
 var cover      = $('#cover');
 var resetBtn   = $('.reseter');
 
 var WIDTH      = element.width();
 var HEIGHT     = element.height();
-var plotCount  = 500;
+var plotCount  = 100;
 var delay      = 10; //ms
 
 var halfWidth  = element.width() / 2;

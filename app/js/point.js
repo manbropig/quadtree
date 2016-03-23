@@ -1,16 +1,21 @@
-function Point(x, y) {
-  this.x = x;
-  this.y = y;
-}
+module.exports = (function() {
 
-Point.prototype.render = function() {
-  var xVal = this.x - 2;
-  var yVal = this.y - 2;
-  var $div = $("<div>", {
-    id: 'x' + this.x + 'y' + this.y,
-    class: 'point',
-    style: 'top: ' + yVal + '; left: ' + xVal
-  });
+  function Point(x, y) {
+    this.x = x;
+    this.y = y;
+  }
 
-  $('#main-view').append($div);
-};
+  Point.prototype.render = function() {
+    var xVal = this.x - 2;
+    var yVal = this.y - 2;
+    var $div = $("<div>", {
+      id: 'x' + this.x + 'y' + this.y,
+      class: 'point',
+      style: 'top: ' + yVal + '; left: ' + xVal
+    });
+
+    $('#main-view').append($div);
+  };
+
+  return Point;
+})();
