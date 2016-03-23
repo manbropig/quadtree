@@ -1,5 +1,7 @@
 var element    = $('#main-view');
 var cover      = $('#cover');
+var resetBtn   = $('.reseter');
+
 var WIDTH      = element.width();
 var HEIGHT     = element.height();
 var plotCount  = 500;
@@ -14,10 +16,24 @@ var root       = new QTNode(bounds);
 var start      = null;
 var end        = null;
 var dragRange  = null;
+var pointCount = 0;
 
 function insert(x, y) {
   var point = arguments.length === 0 ? generatePoint() : new Point(x, y);
-  root.insert(point);
+  if (root.insert(point)) {
+    setCount(pointCount++);
+  }
+}
+
+function setCount(count) {
+  $('#count').text(pointCount);
+}
+
+function reset() {
+  pointCount = 0;
+  $('#count').text(pointCount);
+  $('.boundary, .point').remove();
+  root = new QTNode(bounds);
 }
 
 function plot(count) {
@@ -56,3 +72,5 @@ cover.mouseup(function($event) {
     insert($event.offsetX, $event.offsetY);
   }
 });
+
+resetBtn.click(reset);
