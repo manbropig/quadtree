@@ -51,7 +51,7 @@ function generatePoint() {
   return new Point(_.random(0, WIDTH), _.random(0, HEIGHT));
 }
 
-// plot(plotCount);
+plot(plotCount);
 
 cover.mousedown(function($event) {
   start = new Point($event.offsetX, $event.offsetY);
